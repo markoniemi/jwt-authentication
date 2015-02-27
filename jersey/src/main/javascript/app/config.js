@@ -1,4 +1,4 @@
-angular.module('jersey.config', []).constant('config', {
+angular.module('jwt-authentication.config', []).constant('config', {
 	'apiEndPoint' : "/survey-backend/api/rest/",
 	'projectVersion' : "${project.version}",
 	'angularVersion' : "${angularjs.version}",

@@ -14,7 +14,7 @@
 			<param name="ConversionPattern" value="%t %-5p %c{1} - %m%n" />
 		</layout>
 	</appender>
-	<logger name="org.jersey">
+	<logger name="org.jwt">
 		<level value="debug" />
 	</logger>
 	<!-- Root Logger -->

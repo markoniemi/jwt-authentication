@@ -1,4 +1,4 @@
-package org.jersey.service;
+package org.jwt.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;

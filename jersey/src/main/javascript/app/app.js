@@ -1,5 +1,5 @@
-var app = angular.module('jersey', [ 'ngResource', 'ngRoute',
-		'pascalprecht.translate', 'ui.bootstrap', 'jersey.config' ]);
+var app = angular.module('jwt-authentication', [ 'ngResource', 'ngRoute',
+		'pascalprecht.translate', 'ui.bootstrap', 'jwt-authentication.config' ]);
 
 app.factory('authInterceptor', function ($rootScope, $q, $window, $location) {
     return {

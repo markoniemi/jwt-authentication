@@ -1,4 +1,4 @@
-package org.jersey.security;
+package org.jwt.security;
 
 import javax.xml.bind.DatatypeConverter;
 

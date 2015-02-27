@@ -3,7 +3,7 @@ app.service('loginService', function($http, $rootScope, $window) {
 this.login = function(credentials) {
     $http({
         method: 'GET',
-        url: '/jersey/api/rest/login',
+        url: '/jwt-authentication/api/rest/login',
         params: {username: credentials.username, password: credentials.password}
 //        headers: {'Authorization': 'Token token=xxxxYYYYZzzz'}
      }).success(function(authenticationToken){
@@ -21,7 +21,7 @@ this.login = function(credentials) {
 this.logout = function(callbackFunc) {
 	$http({
 		method: 'POST',
-		url: '/jersey/api/rest/logout'
+		url: '/jwt-authentication/api/rest/logout'
 //		headers: {'Authorization': $rootScope.authenticationToken}
 	}).success(function(authenticationToken){
 		//$cookieStore.put('authToken', authenticationToken);
