@@ -1,5 +1,5 @@
 var app = angular.module('jwt-authentication', [ 'ngResource', 'ngRoute',
-		'pascalprecht.translate', 'ui.bootstrap', 'jwt-authentication.config' ]);
+		'pascalprecht.translate', 'ui.bootstrap' ]);
 
 app.factory('authInterceptor', function ($rootScope, $q, $window, $location) {
     return {

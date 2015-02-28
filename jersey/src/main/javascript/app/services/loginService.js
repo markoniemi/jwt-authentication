@@ -1,4 +1,4 @@
-app.service('loginService', function($http, $rootScope, $window) {
+app.service('loginService', function($http, $rootScope, $window, $log) {
 //delete $http.defaults.headers.common['X-Requested-With'];
 this.login = function(credentials) {
     $http({
@@ -14,7 +14,7 @@ this.login = function(credentials) {
         // Erase the token if the user fails to login
 //        delete $window.sessionStorage.token;
         $rootScope.authenticationToken = null;
-        alert(error);
+        $log.debug('error');
         $scope.message = 'Error: Invalid email or password';
     });
  }
@@ -28,7 +28,7 @@ this.logout = function(callbackFunc) {
 //		delete $window.sessionStorage.token;
 		$rootScope.authenticationToken = null;
 	}).error(function(){
-		alert("error");
+		$log.debug('error');
 	});
 }
 });

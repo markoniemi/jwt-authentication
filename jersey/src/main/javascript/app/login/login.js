@@ -7,9 +7,10 @@ function LoginCtrl(/* store, */$location, $http, $scope, $rootScope, $window,
 		});
 //		$scope.authenticationToken = $window.sessionStorage.token;
 		$scope.authenticationToken = $rootScope.authenticationToken
-		$location.path("/login/login");
+		$location.path("/echo/echo");
 	}
 	$scope.logout = function() {
 		loginService.logout();
+		$location.path("/login/login");
 	}
 }

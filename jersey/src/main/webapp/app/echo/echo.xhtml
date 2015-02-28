@@ -1,0 +1,29 @@
+<div ng-controller="EchoCtrl">
+<div class="page-header">
+	<h2>Echo</h2>
+</div>
+		<form class="form-horizontal" >
+<div class="row">
+	<div class="col-md-6">
+			<div class="form-group">
+				<label for="message" class="col-sm-3 control-label">Message:</label>
+				<div class="col-sm-9">
+					<input id="message" ng-model="message" type="text"
+						class="form-control" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-9 col-sm-offset-3">
+					<input type="submit" value="Send" class="btn btn-primary"
+						ng-click="echo()" />
+					<input type="submit" ng-controller="LoginCtrl" ng-click="logout()"
+					value="Log out" class="btn btn-secondary" />
+				</div>
+			</div>
+	</div>
+</div>
+<div class="col-md-8">
+	<p class="alert alert-info">{{messageFromServer}}</p>
+</div>
+		</form>
+</div>
