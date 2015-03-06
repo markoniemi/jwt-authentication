@@ -11,28 +11,27 @@ import javax.ws.rs.core.MediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.auth0.jwt.JWTSigner;
-import com.auth0.jwt.JWTSigner.Options;
+import org.jwt.security.JwtTokenUtil;
 
 @Slf4j
 @Path("/")
 public class LoginService {
+	private static final String AUTHORIZATION_HEADER = "Authorization";
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/login")
-	public String login(Credentials credentials, @Context HttpServletRequest request) {
-		JWTSigner jwtSigner = new JWTSigner("secret");
-		Options options = new Options();
-//		options.setExpirySeconds(10);
-		String token = jwtSigner.sign(credentials.asHashMap(), options);
-		return token;
+	public String login(Credentials credentials,
+			@Context HttpServletRequest request) {
+		return JwtTokenUtil.createToken(credentials);
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/login")
 	public String login(@QueryParam("username") String username,
-			@QueryParam("password") String password, @Context HttpServletRequest request) {
+			@QueryParam("password") String password,
+			@Context HttpServletRequest request) {
 		log.debug("username: {}, password: {}", username, password);
 		return login(new Credentials(username, password), request);
 	}
@@ -40,7 +39,8 @@ public class LoginService {
 	@GET
 	@Path("/logout")
 	public void logout(@Context HttpServletRequest request) {
-		String authenticationToken = (String) request.getHeader("Authorization");
+		String authenticationToken = (String) request
+				.getHeader("Authorization");
 		log.debug(authenticationToken);
 	}
 

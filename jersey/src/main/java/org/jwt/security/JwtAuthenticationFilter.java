@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
+import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -20,9 +21,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
 
 @Slf4j
-// TODO try exceptions for error handling https://github.com/auth0/auth0-java/blob/master/examples/java-api/src/main/java/com/auth0/webapp/JWTFilter.java
-// TODO handle token expiration
 public class JwtAuthenticationFilter implements Filter {
+	private static final String AUTHORIZATION_HEADER = "Authorization";
 	private String secret;
 	private String loginUrl;
 
@@ -45,7 +45,7 @@ public class JwtAuthenticationFilter implements Filter {
 			String token = getToken(request);
 			if (token != null) {
 				try {
-					new JWTVerifier(secret).verify(token);
+					JwtTokenUtil.verifyToken(token, secret);
 					filterChain.doFilter(servletRequest, servletResponse);
 					// TODO show different message for different errors
 				} catch (InvalidKeyException | NoSuchAlgorithmException
@@ -60,21 +60,11 @@ public class JwtAuthenticationFilter implements Filter {
 	}
 
 	/**
-	 * Token is in request header: Authorization : Bearer <token>.
+	 * Token is in request header: Authorization : Bearer <token>. Accepts header with Bearer prefix and without it.
 	 * @return null if token was not found.
 	 */
-	// TODO check the Bearer as well
-	private String getToken(HttpServletRequest request) {
-		String header = request.getHeader("Authorization");
-		log.debug(header);
-		String token = null;
-		if (header != null) {
-			String[] parts = header.split(" ");
-			if (parts.length > 1) {
-				token = parts[1].trim();
-			}
-		}
-		return token;
+	protected String getToken(HttpServletRequest request) {
+		return JwtTokenUtil.parseToken(request.getHeader(AUTHORIZATION_HEADER));
 	}
 
 	private boolean isLoginUrl(HttpServletRequest request) {
