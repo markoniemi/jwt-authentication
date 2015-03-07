@@ -1,10 +1,13 @@
 package org.jwt.service;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +21,12 @@ public class EchoService {
 		return message;
 	}
 	@GET
-	public String echoWithPost(@QueryParam("message") String message) {
+	public String echoWithGet(@QueryParam("message") String message) {
+		log.debug(message);
+		return message;
+	}
+	@POST
+	public String echoWithPost(String message) {
 		log.debug(message);
 		return message;
 	}

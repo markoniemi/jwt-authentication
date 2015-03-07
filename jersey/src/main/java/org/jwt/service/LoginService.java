@@ -1,6 +1,9 @@
 package org.jwt.service;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -22,8 +25,15 @@ public class LoginService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/login")
 	public String login(Credentials credentials,
-			@Context HttpServletRequest request) {
-		return JwtTokenUtil.createToken(credentials);
+			@Context HttpServletResponse response) throws IOException {
+		if ("admin".equals(credentials.getUsername()) && "admin".equals(credentials.getPassword())){
+			return JwtTokenUtil.createToken(credentials);
+		}
+		else {
+			response.setHeader("WWW-Authenticate", "JWT");
+			response.sendError(401, "Login error");
+			return null;
+		}
 	}
 
 	@GET
@@ -31,9 +41,9 @@ public class LoginService {
 	@Path("/login")
 	public String login(@QueryParam("username") String username,
 			@QueryParam("password") String password,
-			@Context HttpServletRequest request) {
+			@Context HttpServletResponse response) throws IOException {
 		log.debug("username: {}, password: {}", username, password);
-		return login(new Credentials(username, password), request);
+		return login(new Credentials(username, password), response);
 	}
 
 	@GET

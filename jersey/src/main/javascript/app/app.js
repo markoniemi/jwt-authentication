@@ -1,7 +1,7 @@
 var app = angular.module('jwt-authentication', [ 'ngResource', 'ngRoute',
 		'pascalprecht.translate', 'ui.bootstrap' ]);
 
-app.factory('authInterceptor', function ($rootScope, $q, $window, $location) {
+app.factory('authInterceptor', function ($rootScope, $q, $window, $location, $log) {
     return {
         request: function (config) {
 //            config.headers = config.headers || {};
@@ -15,8 +15,9 @@ app.factory('authInterceptor', function ($rootScope, $q, $window, $location) {
         },
         responseError: function (response) {
             if(response.status === 401) {
-                $location.path('/login/login');
+            	$log.debug("401");
             }
+            $location.path('/login/login');
             return $q.reject(response);
         }
     };
