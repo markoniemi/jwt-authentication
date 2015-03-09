@@ -8,13 +8,13 @@ this.login = function(credentials, success, error) {
     	 //$cookieStore.put('authToken', authenticationToken);
     	 $rootScope.authenticationToken = authenticationToken;
 //    	 $window.sessionStorage.token = authenticationToken;
-    	 $log.debug("success");
+    	 $log.debug("login successful");
     	 success();
     }).error(function (data, status, headers, config) {
         // Erase the token if the user fails to login
 //        delete $window.sessionStorage.token;
         $rootScope.authenticationToken = null;
-        $log.debug("error");
+        $log.debug("login error");
         error();
     });
  }
@@ -26,8 +26,9 @@ this.logout = function(callbackFunc) {
 		//$cookieStore.put('authToken', authenticationToken);
 //		delete $window.sessionStorage.token;
 		$rootScope.authenticationToken = null;
+		$log.debug("log out successful");
 	}).error(function(){
-		$log.debug('error');
+		$log.debug("unable log out");
 	});
 }
 });

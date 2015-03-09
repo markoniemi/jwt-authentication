@@ -7,7 +7,7 @@ this.echo = function(message, callback) {
      }).success(function(data){
     	 callback(data.message);
     }).error(function (data, status, headers, config) {
-    	$log.debug('error');
+    	$log.debug("error with echoService");
     });
  }
 });

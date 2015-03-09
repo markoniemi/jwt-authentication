@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.util.regex.Pattern;
 
+import javax.naming.AuthenticationException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -21,6 +22,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
 
 @Slf4j
+// TODO try throwing errors if errormapper would handle them
 public class JwtAuthenticationFilter implements Filter {
 	private static final String AUTHORIZATION_HEADER = "Authorization";
 	private String secret;

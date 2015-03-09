@@ -17,6 +17,11 @@
 				<p class="alert alert-info">{{messageFromServer}}</p>
 			</div>
 		</div>
+	<div class="row">
+		<div class="col-sm" ng-if="authenticationToken">
+			<p class="alert alert-info">Authenticated</p>
+		</div>
+	</div>
 		<div class="row">
 			<div class="col-md-6" ng-if="$rootScope.errorMessage">
 				<p class="alert alert-error">{{$rootScope.errorMessage}}</p>
