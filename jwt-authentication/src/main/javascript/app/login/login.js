@@ -1,15 +1,15 @@
-function LoginCtrl(/* store, */$location, $http, $scope, $rootScope, $window, $log,
+function LoginCtrl($location, $http, $scope, $localStorage, $log,
 		loginService) {
+	$scope.$storage = $localStorage;
 	$scope.login = function() {
 		loginService.login({
 			username : $scope.username,
 			password : $scope.password
 		}, success, error);
-//		$scope.authenticationToken = $window.sessionStorage.token;
 		$location.path("/echo/echo");
 	}
 	success = function(){
-		$scope.authenticationToken = $rootScope.authenticationToken
+		$scope.authenticationToken = $localStorage.authenticationToken
 		$location.path("/echo/echo");
 	}
 	error = function(){

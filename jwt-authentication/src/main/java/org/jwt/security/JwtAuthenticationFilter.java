@@ -22,7 +22,6 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
 
 @Slf4j
-// TODO try throwing errors if errormapper would handle them
 public class JwtAuthenticationFilter implements Filter {
 	private static final String AUTHORIZATION_HEADER = "Authorization";
 	private String secret;

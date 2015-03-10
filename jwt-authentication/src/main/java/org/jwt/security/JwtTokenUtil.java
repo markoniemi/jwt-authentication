@@ -21,7 +21,7 @@ import com.auth0.jwt.JWTSigner.Options;
  */
 @Slf4j
 public class JwtTokenUtil {
-	protected static final int EXPIRY_SECONDS = 10;
+	protected static final int EXPIRY_SECONDS = 60;
 	protected static final String SECRET = "secret";
 	protected static final String HEADER_PREFIX = "Bearer ";
 

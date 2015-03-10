@@ -1,19 +1,16 @@
-app.service('loginService', function($http, $rootScope, $window, $log) {
+app.service('loginService', function($http, $localStorage, $log) {
 this.login = function(credentials, success, error) {
     $http({
         method: 'POST',
         url: '/jwt-authentication/api/rest/login',
         data: {username: credentials.username, password: credentials.password}
      }).success(function(authenticationToken){
-    	 //$cookieStore.put('authToken', authenticationToken);
-    	 $rootScope.authenticationToken = authenticationToken;
-//    	 $window.sessionStorage.token = authenticationToken;
+    	 $localStorage.authenticationToken = authenticationToken;
     	 $log.debug("login successful");
     	 success();
     }).error(function (data, status, headers, config) {
         // Erase the token if the user fails to login
-//        delete $window.sessionStorage.token;
-        $rootScope.authenticationToken = null;
+        delete $localStorage.authenticationToken;
         $log.debug("login error");
         error();
     });
@@ -23,9 +20,8 @@ this.logout = function(callbackFunc) {
 		method: 'POST',
 		url: '/jwt-authentication/api/rest/logout'
 	}).success(function(authenticationToken){
-		//$cookieStore.put('authToken', authenticationToken);
-//		delete $window.sessionStorage.token;
-		$rootScope.authenticationToken = null;
+//		$localStorage.$reset();
+		delete $localStorage.authenticationToken;
 		$log.debug("log out successful");
 	}).error(function(){
 		$log.debug("unable log out");

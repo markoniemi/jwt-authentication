@@ -1,15 +1,12 @@
 var app = angular.module('jwt-authentication', [ 'ngResource', 'ngRoute',
-		'pascalprecht.translate', 'ui.bootstrap' ]);
+		'pascalprecht.translate', 'ui.bootstrap', 'ngStorage' ]);
 
-app.factory('authInterceptor', function ($rootScope, $q, $window, $location, $log) {
+app.factory('authInterceptor', function ($q, $localStorage, $location, $log) {
     return {
         request: function (config) {
-//            config.headers = config.headers || {};
-//        	if($window.sessionStorage.token) {
-            if($rootScope.authenticationToken) {
-            	config.headers['Authorization'] = 'Bearer ' + $rootScope.authenticationToken;
-//            	config.headers['Authorization'] = $rootScope.authenticationToken;
-//                config.headers['Authorization'] = $window.sessionStorage.token;
+        	if($localStorage.authenticationToken) {
+        		$log.debug("sending authenticationToken");
+            	config.headers['Authorization'] = 'Bearer ' + $localStorage.authenticationToken;
             }
             return config;
         },

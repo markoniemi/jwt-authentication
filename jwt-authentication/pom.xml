@@ -27,6 +27,11 @@
 			<artifactId>angular-translate</artifactId>
 			<version>${angular-translate.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>ngStorage</artifactId>
+			<version>0.3.0</version>
+		</dependency>
 		<!-- jwt -->
 		<dependency>
 			<groupId>org.webjars</groupId>

@@ -1,4 +1,5 @@
-function EchoCtrl($location, $scope, echoService, $log) {
+function EchoCtrl($location, $scope, $localStorage, echoService, $log) {
+	$scope.$storage = $localStorage;
 	$scope.message = 'Message';
 	callback = function(message){
 		$scope.messageFromServer = message;
@@ -8,6 +9,5 @@ function EchoCtrl($location, $scope, echoService, $log) {
 		$scope.messageFromServer = echoService.echo({
 			message : $scope.message
 		}, callback);
-//		$location.path("/echo/echo");
 	}
 }
