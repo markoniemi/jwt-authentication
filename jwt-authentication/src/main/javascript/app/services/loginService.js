@@ -1,4 +1,4 @@
-app.service('loginService', function($http, $localStorage, $log) {
+app.service('loginService', function($http, $localStorage, $log, jwtHelper) {
 this.login = function(credentials, success, error) {
     $http({
         method: 'POST',
@@ -6,6 +6,8 @@ this.login = function(credentials, success, error) {
         data: {username: credentials.username, password: credentials.password}
      }).success(function(authenticationToken){
     	 $localStorage.authenticationToken = authenticationToken;
+    	 $localStorage.credentials = jwtHelper.decodeToken(authenticationToken);
+    	 $log.debug(credentials);
     	 $log.debug("login successful");
     	 success();
     }).error(function (data, status, headers, config) {
