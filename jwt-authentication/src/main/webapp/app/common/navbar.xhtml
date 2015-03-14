@@ -1,0 +1,23 @@
+<nav class="navbar navbar-default" role="navigation">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" ng-init="navbarCollapsed=true"
+			ng-click="navbarCollapsed = !navbarCollapsed">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="#" translate>SURVEY</a>
+	</div>
+
+	<div class="collapse navbar-collapse" collapse="navbarCollapsed">
+		<ul class="nav navbar-nav">
+			<li><a href="#/users" ng-click="navbarCollapsed = !navbarCollapsed" translate>USERS</a></li>
+			<li><a href="#/files" ng-click="navbarCollapsed = !navbarCollapsed" translate>FILES</a></li>
+			<li><a href="#/polls" ng-click="navbarCollapsed = !navbarCollapsed" translate>POLLS</a></li>
+			<li class="divider"></li>
+			<li><a href="#/about" ng-click="navbarCollapsed = !navbarCollapsed" translate>ABOUT</a></li>
+			<li><a href="#" ng-click="navbarCollapsed = !navbarCollapsed">test</a></li>
+		</ul>
+	</div>

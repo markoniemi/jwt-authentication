@@ -9,7 +9,7 @@ function LoginCtrl($location, $http, $scope, $localStorage, $log,
 		$location.path("/echo/echo");
 	}
 	success = function(){
-		$scope.authenticationToken = $localStorage.authenticationToken
+		$scope.authenticationToken = $localStorage.authenticationToken;
 		$location.path("/echo/echo");
 	}
 	error = function(){
