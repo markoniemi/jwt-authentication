@@ -10,14 +10,13 @@
 		</button>
 		<a class="navbar-brand" href="#" translate>SURVEY</a>
 	</div>
-
 	<div class="collapse navbar-collapse" collapse="navbarCollapsed">
 		<ul class="nav navbar-nav">
-			<li><a href="#/users" ng-click="navbarCollapsed = !navbarCollapsed" translate>USERS</a></li>
-			<li><a href="#/files" ng-click="navbarCollapsed = !navbarCollapsed" translate>FILES</a></li>
-			<li><a href="#/polls" ng-click="navbarCollapsed = !navbarCollapsed" translate>POLLS</a></li>
+			<li><a href="#/users" translate>USERS</a></li>
+			<li><a href="#/files" translate>FILES</a></li>
+			<li><a href="#/polls" translate>POLLS</a></li>
 			<li class="divider"></li>
-			<li><a href="#/about" ng-click="navbarCollapsed = !navbarCollapsed" translate>ABOUT</a></li>
-			<li><a href="#" ng-click="navbarCollapsed = !navbarCollapsed">test</a></li>
+			<li><a href="#/about" translate>ABOUT</a></li>
+			<li ng-controller="MenuCtrl"><p class="navbar-text"><span class="label label-default">{{credentials.username}}</span></p></li>
 		</ul>
 	</div>

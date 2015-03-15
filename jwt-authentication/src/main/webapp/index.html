@@ -5,7 +5,7 @@
 <script type="text/javascript" src="webjars/angularjs/1.2.16/angular.js"></script>
 <script type="text/javascript" src="webjars/angularjs/1.2.16/angular-route.js"></script>
 <script type="text/javascript" src="webjars/angularjs/1.2.16/angular-resource.js"></script>
-<script type="text/javascript" src="webjars/angular-ui-bootstrap/0.12.0/ui-bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap.min.js"></script>
 <script type="text/javascript" src="webjars/angular-translate/2.4.2/angular-translate.min.js"></script>
 <script type="text/javascript" src="webjars/angular-jwt/0.0.6/angular-jwt.min.js"></script>
 <script type="text/javascript" src="webjars/ngStorage/0.3.0/ngStorage.min.js"></script>
@@ -15,6 +15,7 @@
 <script src="app/route.js"></script>
 <script src="app/services/loginService.js"></script>
 <script src="app/services/echoService.js"></script>
+<script src="app/common/menu.js"></script>
 <script src="app/login/login.js"></script>
 <script src="app/echo/echo.js"></script>
 
@@ -22,7 +23,7 @@
 
 </head>
 <body>
-	<div ng-include="'app/common/navbar.xhtml'"></div>
+	<div ng-include="'app/common/menu.xhtml'"></div>
 	<div id="ng-view" class="ng-view: jwt-authentication"></div>
 </body>
 </html>
