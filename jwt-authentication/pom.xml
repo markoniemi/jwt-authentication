@@ -7,7 +7,7 @@
 	<packaging>war</packaging>
 	<properties>
 		<angularjs.version>1.2.16</angularjs.version>
-		<angular-ui-bootstrap.version>0.11.2</angular-ui-bootstrap.version>
+		<angular-ui-bootstrap.version>0.12.1-1</angular-ui-bootstrap.version>
 		<angular-translate.version>2.4.2</angular-translate.version>
 	</properties>
 	<dependencies>
