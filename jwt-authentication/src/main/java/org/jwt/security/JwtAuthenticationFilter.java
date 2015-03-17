@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
-import java.util.regex.Pattern;
 
-import javax.naming.AuthenticationException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -18,20 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
 
 @Slf4j
 public class JwtAuthenticationFilter implements Filter {
-	private static final String AUTHORIZATION_HEADER = "Authorization";
-	private String secret;
-	private String loginUrl;
+	protected String loginUrl;
 
 	@Override
-	// TODO add logging
 	public void init(FilterConfig filterConfig) throws ServletException {
-		secret = filterConfig.getInitParameter("secret");
 		loginUrl = filterConfig.getInitParameter("loginUrl");
+		log.debug("Using loginUrl: {}", loginUrl);
 	}
 
 	@Override
@@ -41,21 +35,25 @@ public class JwtAuthenticationFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		if (isLoginUrl(request)) {
-			filterChain.doFilter(servletRequest, servletResponse);
+		    log.trace("URL {} is login URL.", request.getRequestURI());
+			filterChain.doFilter(request, response);
 		} else {
 			String token = getToken(request);
 			if (token != null) {
 				try {
-					JwtTokenUtil.verifyToken(token, secret);
-					filterChain.doFilter(servletRequest, servletResponse);
+					JwtTokenUtil.verifyToken(token, JwtTokenUtil.SECRET);
+					log.debug("URL {} is authenticated", request.getRequestURI());
+					filterChain.doFilter(request, response);
 					// TODO show different message for different errors
 				} catch (InvalidKeyException | NoSuchAlgorithmException
 						| IllegalStateException | SignatureException
 						| JWTVerifyException e) {
-					unauthorized(response);
+			        log.debug("URL {} is not authenticated", request.getRequestURI());
+					sendError(response);
 				}
 			} else {
-				unauthorized(response);
+		        log.debug("URL {} is not authenticated", request.getRequestURI());
+				sendError(response);
 			}
 		}
 	}
@@ -65,27 +63,27 @@ public class JwtAuthenticationFilter implements Filter {
 	 * @return null if token was not found.
 	 */
 	protected String getToken(HttpServletRequest request) {
-		return JwtTokenUtil.parseToken(request.getHeader(AUTHORIZATION_HEADER));
+		return JwtTokenUtil.parseToken(request.getHeader(JwtTokenUtil.AUTHORIZATION_HEADER));
 	}
 
 	private boolean isLoginUrl(HttpServletRequest request) {
 		String uri = request.getRequestURI();
 		String contextPath = request.getContextPath();
-		log.debug(uri);
-		return uri.equals(contextPath + loginUrl);
+		boolean isLoginUrl = uri.equals(contextPath + loginUrl);
+		return isLoginUrl;
 	}
 
 	@Override
 	public void destroy() {
 	}
 
-	private void unauthorized(HttpServletResponse response, String message)
+	private void sendError(HttpServletResponse response, String message)
 			throws IOException {
 		response.setHeader("WWW-Authenticate", "JWT");
 		response.sendError(401, message);
 	}
 
-	private void unauthorized(HttpServletResponse response) throws IOException {
-		unauthorized(response, "Unauthorized");
+	private void sendError(HttpServletResponse response) throws IOException {
+		sendError(response, "Unauthorized");
 	}
 }

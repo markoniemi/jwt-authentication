@@ -21,48 +21,47 @@ import com.auth0.jwt.JWTSigner.Options;
  */
 @Slf4j
 public class JwtTokenUtil {
-	protected static final int EXPIRY_SECONDS = 60;
-	protected static final String SECRET = "secret";
-	protected static final String HEADER_PREFIX = "Bearer ";
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+    protected static int expirySeconds = 60;
+    protected static final String SECRET = "secret";
+    protected static final String HEADER_PREFIX = "Bearer ";
 
-	/**
-	 * Utility class has protected constructor
-	 */
-	protected JwtTokenUtil() {
-	}
+    /**
+     * Utility class has protected constructor
+     */
+    protected JwtTokenUtil() {
+    }
 
-	public static String createToken(Credentials credentials) {
-		return createToken(credentials.asHashMap(), SECRET, EXPIRY_SECONDS);
-	}
+    public static String createToken(Credentials credentials) {
+        return createToken(credentials.asHashMap(), SECRET, expirySeconds);
+    }
 
-	public static String createToken(Map<String, Object> payload) {
-		return createToken(payload, SECRET, EXPIRY_SECONDS);
-	}
+    public static String createToken(Map<String, Object> payload) {
+        return createToken(payload, SECRET, expirySeconds);
+    }
 
-	public static String createToken(Map<String, Object> payload,
-			String secret, int expirySeconds) {
-		JWTSigner jwtSigner = new JWTSigner(secret);
-		Options options = new Options();
-		options.setExpirySeconds(expirySeconds);
-		options.setAlgorithm(Algorithm.HS512);
-		String token = jwtSigner.sign(payload, options);
-		return token;
-	}
+    public static String createToken(Map<String, Object> payload, String secret, int expirySeconds) {
+        JWTSigner jwtSigner = new JWTSigner(secret);
+        Options options = new Options();
+        options.setExpirySeconds(expirySeconds);
+        options.setAlgorithm(Algorithm.HS512);
+        String token = jwtSigner.sign(payload, options);
+        return token;
+    }
 
-	public static void verifyToken(String token, String secret)
-			throws NoSuchAlgorithmException, InvalidKeyException, IOException,
-			SignatureException, JWTVerifyException {
-		new JWTVerifier(secret).verify(token);
-	}
+    public static void verifyToken(String token, String secret) throws NoSuchAlgorithmException, InvalidKeyException,
+            IOException, SignatureException, JWTVerifyException {
+        new JWTVerifier(secret).verify(token);
+    }
 
-	/**
-	 * Accepts header with Bearer prefix and without it.
-	 */
-	public static String parseToken(String header) {
-		log.debug(header);
-		if (header == null) {
-			return null;
-		}
-		return header.replace(HEADER_PREFIX, "");
-	}
+    /**
+     * Accepts header with Bearer prefix and without it.
+     */
+    public static String parseToken(String header) {
+        log.trace(header);
+        if (header == null) {
+            return null;
+        }
+        return header.replace(HEADER_PREFIX, "");
+    }
 }
