@@ -9,6 +9,7 @@
 		<angularjs.version>1.2.16</angularjs.version>
 		<angular-ui-bootstrap.version>0.12.1-1</angular-ui-bootstrap.version>
 		<angular-translate.version>2.4.2</angular-translate.version>
+		<jersey.version>2.16</jersey.version>
 	</properties>
 	<dependencies>
 		<!-- UI -->
@@ -32,12 +33,12 @@
 			<artifactId>ngStorage</artifactId>
 			<version>0.3.0</version>
 		</dependency>
-		<!-- jwt -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>angular-jwt</artifactId>
 			<version>0.0.6</version>
 		</dependency>
+		<!-- jwt -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>angular-local-storage</artifactId>
@@ -52,12 +53,12 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet</artifactId>
-			<version>2.16</version>
+			<version>${jersey.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
-			<version>2.16</version>
+			<version>${jersey.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
@@ -133,6 +134,26 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.1.201405082137</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+							<goal>report</goal>
+							<!-- <goal>prepare-agent-integration</goal> -->
+							<!-- <goal>report-integration</goal> -->
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<exclude>**com.steadystate*</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
