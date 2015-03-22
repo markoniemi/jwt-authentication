@@ -1,10 +1,7 @@
 package org.jwt.service;
 
-import java.io.IOException;
-
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -21,8 +18,7 @@ public class LoginService {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/login")
-    public String login(Credentials credentials, @Context HttpServletResponse response) throws IOException,
-            AuthenticationException {
+    public String login(Credentials credentials) throws AuthenticationException {
         if ("admin".equals(credentials.getUsername()) && "admin".equals(credentials.getPassword())) {
             log.debug("Username: {} logged in.", credentials.getUsername());
             return JwtTokenUtil.createToken(credentials);

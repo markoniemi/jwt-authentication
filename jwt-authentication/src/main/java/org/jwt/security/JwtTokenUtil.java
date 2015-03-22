@@ -45,8 +45,7 @@ public class JwtTokenUtil {
         Options options = new Options();
         options.setExpirySeconds(expirySeconds);
         options.setAlgorithm(Algorithm.HS512);
-        String token = jwtSigner.sign(payload, options);
-        return token;
+        return jwtSigner.sign(payload, options);
     }
 
     public static void verifyToken(String token, String secret) throws NoSuchAlgorithmException, InvalidKeyException,

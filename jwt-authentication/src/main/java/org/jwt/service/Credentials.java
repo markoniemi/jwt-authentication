@@ -14,15 +14,15 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @ToString
 public class Credentials {
-	@NonNull
-	private String username;
-	@NonNull
-	private String password;
+    @NonNull
+    private String username;
+    @NonNull
+    private String password;
 
-	public Map<String, Object> asHashMap() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("username", username);
-		map.put("password", password);
-		return map;
-	}
+    public Map<String, Object> asHashMap() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("username", username);
+        map.put("password", password);
+        return map;
+    }
 }

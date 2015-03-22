@@ -1,4 +1,3 @@
-//'use strict';
 app.config([ '$routeProvider', function($routeProvider) {
 	console.log("route");
 	$routeProvider.when('/:group/:page/:id', {
