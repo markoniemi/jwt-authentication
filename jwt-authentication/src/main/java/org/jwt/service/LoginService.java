@@ -1,5 +1,6 @@
 package org.jwt.service;
 
+import javax.inject.Inject;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.POST;
@@ -8,18 +9,31 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import org.jvnet.hk2.annotations.Service;
 import org.jwt.security.JwtTokenUtil;
 
 @Slf4j
 @Path("/")
+@Service
 public class LoginService {
+    @Inject
+    @Getter
+    @Setter
+    private UserService userService;
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/login")
     public String login(Credentials credentials) throws AuthenticationException {
-        if ("admin".equals(credentials.getUsername()) && "admin".equals(credentials.getPassword())) {
+        Credentials user = userService.findUser(credentials.getUsername());
+        if (user == null) {
+            throw new AuthenticationException("Login error");
+        }
+        if (user.getPassword().equals(credentials.getPassword())) {
             log.debug("Username: {} logged in.", credentials.getUsername());
             return JwtTokenUtil.createToken(credentials);
         } else {
