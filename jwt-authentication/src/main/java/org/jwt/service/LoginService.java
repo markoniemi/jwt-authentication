@@ -14,7 +14,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.jvnet.hk2.annotations.Service;
-import org.jwt.security.JwtTokenUtil;
+import org.jwt.security.JwtToken;
 
 @Slf4j
 @Path("/")
@@ -35,7 +35,7 @@ public class LoginService {
         }
         if (user.getPassword().equals(credentials.getPassword())) {
             log.debug("Username: {} logged in.", credentials.getUsername());
-            return JwtTokenUtil.createToken(credentials);
+            return new JwtToken(credentials).getToken();
         } else {
             throw new AuthenticationException("Login error");
         }
@@ -44,7 +44,7 @@ public class LoginService {
     @POST
     @Path("/logout")
     public void logout(@Context HttpServletRequest request) {
-        String authenticationToken = (String) request.getHeader(JwtTokenUtil.AUTHORIZATION_HEADER);
+        String authenticationToken = (String) request.getHeader(JwtToken.AUTHORIZATION_HEADER);
         log.debug(authenticationToken);
     }
 }

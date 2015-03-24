@@ -55,7 +55,7 @@ public class JwtAuthenticationFilterTest {
         String loginUrl = "/api/rest/login";
         String contextPath = "/jwt-authentication";
         String requestUri="/jwt-authentication/api/rest/echo";
-        prepareMock(loginUrl, contextPath, requestUri, JwtTokenUtil.createToken(new Credentials("username", "password")));
+        prepareMock(loginUrl, contextPath, requestUri, new JwtToken(new Credentials("username", "password")).getToken());
         doFilter();
         Mockito.verify(filterChain).doFilter(request, response);
     }
@@ -64,7 +64,7 @@ public class JwtAuthenticationFilterTest {
         String loginUrl = "/api/rest/login";
         String contextPath = "/jwt-authentication";
         String requestUri="/jwt-authentication/api/rest/echo";
-        prepareMock(loginUrl, contextPath, requestUri, "Bearer " + JwtTokenUtil.createToken(new Credentials("username", "password")));
+        prepareMock(loginUrl, contextPath, requestUri, "Bearer " + new JwtToken(new Credentials("username", "password")).getToken());
         doFilter();
         Mockito.verify(filterChain).doFilter(request, response);
     }
@@ -73,8 +73,8 @@ public class JwtAuthenticationFilterTest {
         String loginUrl = "/api/rest/login";
         String contextPath = "/jwt-authentication";
         String requestUri="/jwt-authentication/api/rest/echo";
-        JwtTokenUtil.expirySeconds=1;
-        prepareMock(loginUrl, contextPath, requestUri, JwtTokenUtil.createToken(new Credentials("username", "password")));
+        JwtToken.expirySeconds=1;
+        prepareMock(loginUrl, contextPath, requestUri, new JwtToken(new Credentials("username", "password")).getToken());
         Thread.sleep(1000);
         doFilter();
         Mockito.verify(response).sendError(401, "Unauthorized");
@@ -86,10 +86,10 @@ public class JwtAuthenticationFilterTest {
         jwtAuthenticationFilter.doFilter(request, response, filterChain);
     }
 
-    private void prepareMock(String loginUrl, String contextPath, String requestUri, String header) {
+    private void prepareMock(String loginUrl, String contextPath, String requestUri, String token) {
         Mockito.when(filterConfig.getInitParameter("loginUrl")).thenReturn(loginUrl);
         Mockito.when(request.getContextPath()).thenReturn(contextPath);
         Mockito.when(request.getRequestURI()).thenReturn(requestUri);
-        Mockito.when(request.getHeader(JwtTokenUtil.AUTHORIZATION_HEADER)).thenReturn(header);
+        Mockito.when(request.getHeader(JwtToken.AUTHORIZATION_HEADER)).thenReturn(token);
     }
 }

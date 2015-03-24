@@ -37,20 +37,20 @@ public class JwtAuthenticationFilter implements Filter {
             log.trace("URL {} is login URL.", request.getRequestURI());
             filterChain.doFilter(request, response);
         } else {
-            String token = getToken(request);
+            JwtToken token = getToken(request);
             if (token != null) {
                 try {
-                    JwtTokenUtil.verifyToken(token, JwtTokenUtil.SECRET);
+                    token.verifyToken();
                     log.debug("URL {} is authenticated", request.getRequestURI());
                     filterChain.doFilter(request, response);
                     // TODO show different message for different errors
                 } catch (InvalidKeyException | NoSuchAlgorithmException | IllegalStateException | SignatureException
                         | JWTVerifyException e) {
-                    log.debug("URL {} is not authenticated", request.getRequestURI());
+                    log.warn(String.format("URL %s is not authenticated", request.getRequestURI()), e);
                     sendError(response);
                 }
             } else {
-                log.debug("URL {} is not authenticated", request.getRequestURI());
+                log.warn("URL {} is not authenticated", request.getRequestURI());
                 sendError(response);
             }
         }
@@ -62,8 +62,8 @@ public class JwtAuthenticationFilter implements Filter {
      * 
      * @return null if token was not found.
      */
-    protected String getToken(HttpServletRequest request) {
-        return JwtTokenUtil.parseToken(request.getHeader(JwtTokenUtil.AUTHORIZATION_HEADER));
+    protected JwtToken getToken(HttpServletRequest request) {
+        return JwtToken.parseToken(request.getHeader(JwtToken.AUTHORIZATION_HEADER));
     }
 
     private boolean isLoginUrl(HttpServletRequest request) {
