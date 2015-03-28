@@ -6,7 +6,7 @@
 					<input type="text" class="form-control" ng-model="message"
 						placeholder="Message"/>
 					<div class="input-group-btn">
-						<input type="submit" value="Send" class="btn btn-primary"
+						<input id="echoButton" type="submit" value="Send" class="btn btn-primary"
 							ng-click="echo()" />
 					</div>
 				</div>
@@ -14,7 +14,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6" ng-if="messageFromServer">
-				<p class="alert alert-info">{{messageFromServer}}</p>
+				<p id="messageFromServer" class="alert alert-info">{{messageFromServer}}</p>
 			</div>
 		</div>
 	<div class="row">

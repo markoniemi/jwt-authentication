@@ -46,11 +46,11 @@ public class JwtAuthenticationFilter implements Filter {
                     // TODO show different message for different errors
                 } catch (InvalidKeyException | NoSuchAlgorithmException | IllegalStateException | SignatureException
                         | JWTVerifyException e) {
-                    log.warn(String.format("URL %s is not authenticated", request.getRequestURI()), e);
+                    log.trace(String.format("URL %s is not authenticated", request.getRequestURI()), e);
                     sendError(response);
                 }
             } else {
-                log.warn("URL {} is not authenticated", request.getRequestURI());
+                log.trace("URL {} is not authenticated", request.getRequestURI());
                 sendError(response);
             }
         }
