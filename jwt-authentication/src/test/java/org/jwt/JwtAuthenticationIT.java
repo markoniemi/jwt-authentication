@@ -57,6 +57,8 @@ public class JwtAuthenticationIT {
         browser.findElement(By.id("j_password")).sendKeys("");
         browser.findElement(By.id("loginButton")).click();
         Thread.sleep(500);
+        Assert.assertEquals(browser.getPageSource(), "Login",
+        browser.getTitle());
     }
 
     private void login() throws InterruptedException {
@@ -66,12 +68,14 @@ public class JwtAuthenticationIT {
         browser.findElement(By.id("j_password")).sendKeys("admin");
         browser.findElement(By.id("loginButton")).click();
         Thread.sleep(500);
+        Assert.assertEquals(browser.getPageSource(), "Echo",
+        browser.getTitle());
     }
 
     protected void openBrowser() throws InterruptedException {
         browser.get(serverURL + "/" + appName + "/");
         Thread.sleep(500);
-        // Assert.assertEquals(browser.getPageSource(), "Login",
-        // browser.getTitle());
+         Assert.assertEquals(browser.getPageSource(), "Login",
+         browser.getTitle());
     }
 }
