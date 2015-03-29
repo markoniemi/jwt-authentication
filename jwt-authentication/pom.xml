@@ -7,9 +7,9 @@
 	<packaging>war</packaging>
 	<properties>
 		<http.port>8082</http.port>
-<!-- 		<http.port>8443</http.port> -->
+		<!-- <http.port>8443</http.port> -->
 		<http.protocol>http</http.protocol>
-<!-- 		<http.protocol>https</http.protocol> -->
+		<!-- <http.protocol>https</http.protocol> -->
 		<ajp.port>8019</ajp.port>
 		<rmi.port>8206</rmi.port>
 		<sonar.sources>src/main</sonar.sources>
@@ -191,18 +191,8 @@
 					</execution>
 				</executions>
 				<configuration>
+					<outputDirectory>${appsDir}</outputDirectory>
 					<version>1.9.7</version>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.17</version>
-				<configuration>
-					<systemPropertyVariables>
-						<!-- <phantomjs.binary>${phantomjs.binary}</phantomjs.binary> -->
-						<phantomjs.binary>target/phantomjs-maven-plugin/phantomjs-1.9.7-windows/phantomjs.exe</phantomjs.binary>
-					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -248,11 +238,11 @@
 					</container>
 					<configuration>
 						<files>
-<!-- 							<file> -->
-<!-- 								<file>${project.basedir}/src/test/resources/survey.jks</file> -->
-<!-- 								<todir>conf</todir> -->
-<!-- 								<overwrite>true</overwrite> -->
-<!-- 							</file> -->
+							<!-- <file> -->
+							<!-- <file>${project.basedir}/src/test/resources/survey.jks</file> -->
+							<!-- <todir>conf</todir> -->
+							<!-- <overwrite>true</overwrite> -->
+							<!-- </file> -->
 						</files>
 						<properties>
 							<cargo.servlet.users>admin:admin:User</cargo.servlet.users>
@@ -261,12 +251,12 @@
 							<cargo.tomcat.ajp.port>${ajp.port}</cargo.tomcat.ajp.port>
 							<cargo.container.rmi.port>${rmi.port}</cargo.container.rmi.port>
 							<!-- testing properties for ssl -->
-<!-- 							<cargo.tomcat.connector.clientAuth>false</cargo.tomcat.connector.clientAuth> -->
-<!-- 							<cargo.tomcat.connector.keyAlias>survey</cargo.tomcat.connector.keyAlias> -->
-<!-- 							<cargo.tomcat.connector.keystoreFile>conf/survey.jks</cargo.tomcat.connector.keystoreFile> -->
-<!-- 							<cargo.tomcat.connector.keystorePass>changeit</cargo.tomcat.connector.keystorePass> -->
-<!-- 							<cargo.tomcat.connector.sslProtocol>TLS</cargo.tomcat.connector.sslProtocol> -->
-<!-- 							<cargo.tomcat.httpSecure>true</cargo.tomcat.httpSecure> -->
+							<!-- <cargo.tomcat.connector.clientAuth>false</cargo.tomcat.connector.clientAuth> -->
+							<!-- <cargo.tomcat.connector.keyAlias>survey</cargo.tomcat.connector.keyAlias> -->
+							<!-- <cargo.tomcat.connector.keystoreFile>conf/survey.jks</cargo.tomcat.connector.keystoreFile> -->
+							<!-- <cargo.tomcat.connector.keystorePass>changeit</cargo.tomcat.connector.keystorePass> -->
+							<!-- <cargo.tomcat.connector.sslProtocol>TLS</cargo.tomcat.connector.sslProtocol> -->
+							<!-- <cargo.tomcat.httpSecure>true</cargo.tomcat.httpSecure> -->
 						</properties>
 					</configuration>
 				</configuration>
