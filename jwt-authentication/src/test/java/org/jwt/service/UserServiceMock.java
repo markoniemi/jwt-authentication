@@ -1,5 +1,8 @@
 package org.jwt.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Named;
 
 import org.jvnet.hk2.annotations.Service;
@@ -7,11 +10,18 @@ import org.jvnet.hk2.annotations.Service;
 @Service
 @Named
 public class UserServiceMock implements UserService {
+    @Override
+    public List<User> findAll() {
+        List<User> user = new ArrayList<User>();
+        user.add(new User("admin", "admin"));
+        user.add(new User("user", "user"));
+        return user;
+    }
 
     @Override
-    public Credentials findUser(String username) {
+    public User findUser(String username) {
         if ("username".equals(username)) {
-            return new Credentials(username, "password");
+            return new User(username, "password");
         }
         return null;
     }

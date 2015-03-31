@@ -4,7 +4,7 @@ import java.security.SignatureException;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.jwt.service.Credentials;
+import org.jwt.service.User;
 
 import com.auth0.jwt.JWTExpiredException;
 import com.auth0.jwt.JWTSigner;
@@ -25,8 +25,8 @@ public class JwtTokenTest {
     @Test
     public void verifyToken() {
         try {
-            Credentials credentials = new Credentials("username", "password");
-            JwtToken token = new JwtToken(credentials.asHashMap(), 10);
+            User user = new User("username", "password");
+            JwtToken token = new JwtToken(user.asHashMap(), 10);
             token.verifyToken();
         } catch (Exception e) {
             Assert.fail();
@@ -36,8 +36,8 @@ public class JwtTokenTest {
     @Test
     public void verifyTokenWithExpiredToken() {
         try {
-            Credentials credentials = new Credentials("username", "password");
-            JwtToken token = new JwtToken(credentials.asHashMap(), 1);
+            User user = new User("username", "password");
+            JwtToken token = new JwtToken(user.asHashMap(), 1);
             Thread.sleep(1000);
             token.verifyToken();
             Assert.fail();
@@ -49,9 +49,9 @@ public class JwtTokenTest {
     @Test()
     public void verifyTokenWithInvalidSignature() {
         try {
-            Credentials credentials = new Credentials("username", "password");
+            User user = new User("username", "password");
             JWTSigner jwtSigner = new JWTSigner("wrong_secret");
-            String tokenString = jwtSigner.sign(credentials.asHashMap());
+            String tokenString = jwtSigner.sign(user.asHashMap());
             JwtToken token = new JwtToken(tokenString);
             token.verifyToken();
             Assert.fail();

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.jwt.service.Credentials;
+import org.jwt.service.User;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -55,7 +55,7 @@ public class JwtAuthenticationFilterTest {
         String loginUrl = "/api/rest/login";
         String contextPath = "/jwt-authentication";
         String requestUri="/jwt-authentication/api/rest/echo";
-        prepareMock(loginUrl, contextPath, requestUri, new JwtToken(new Credentials("username", "password")).getToken());
+        prepareMock(loginUrl, contextPath, requestUri, new JwtToken(new User("username", "password")).getToken());
         doFilter();
         Mockito.verify(filterChain).doFilter(request, response);
     }
@@ -64,7 +64,7 @@ public class JwtAuthenticationFilterTest {
         String loginUrl = "/api/rest/login";
         String contextPath = "/jwt-authentication";
         String requestUri="/jwt-authentication/api/rest/echo";
-        prepareMock(loginUrl, contextPath, requestUri, "Bearer " + new JwtToken(new Credentials("username", "password")).getToken());
+        prepareMock(loginUrl, contextPath, requestUri, "Bearer " + new JwtToken(new User("username", "password")).getToken());
         doFilter();
         Mockito.verify(filterChain).doFilter(request, response);
     }
@@ -74,7 +74,7 @@ public class JwtAuthenticationFilterTest {
         String contextPath = "/jwt-authentication";
         String requestUri="/jwt-authentication/api/rest/echo";
         JwtToken.expirySeconds=1;
-        prepareMock(loginUrl, contextPath, requestUri, new JwtToken(new Credentials("username", "password")).getToken());
+        prepareMock(loginUrl, contextPath, requestUri, new JwtToken(new User("username", "password")).getToken());
         Thread.sleep(1000);
         doFilter();
         Mockito.verify(response).sendError(401, "Unauthorized");

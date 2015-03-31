@@ -17,7 +17,7 @@ public class LoginServiceTest extends HK2Runner {
     @Test
     public void login() throws AuthenticationException {
         loginService.setUserService(userService);
-        String token = loginService.login(new Credentials("username", "password"));
+        String token = loginService.login(new User("username", "password"));
         Assert.assertNotNull(token);
     }
 }

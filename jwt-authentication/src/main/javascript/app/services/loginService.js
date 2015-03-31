@@ -1,22 +1,22 @@
 app.service('loginService', function($rootScope, $http, $localStorage, $log, jwtHelper) {
-    this.login = function(credentials, success, error) {
+    this.login = function(user, success, error) {
         $http({
             method : 'POST',
             url : '/jwt-authentication/api/rest/login',
             data : {
-                username : credentials.username,
-                password : credentials.password
+                username : user.username,
+                password : user.password
             }
         }).success(function(authenticationToken) {
             $localStorage.authenticationToken = authenticationToken;
-            $localStorage.credentials = jwtHelper.decodeToken(authenticationToken);
-            $rootScope.$broadcast('login', $localStorage.credentials);
-            $log.debug("login successful: " + credentials.username);
+            $localStorage.user = jwtHelper.decodeToken(authenticationToken);
+            $rootScope.$broadcast('login', $localStorage.user);
+            $log.debug("login successful: " + user.username);
             success();
         }).error(function() {
             // Erase the token if the user fails to login
             delete $localStorage.authenticationToken;
-            delete $localStorage.credentials;
+            delete $localStorage.user;
             $log.debug("login error");
             error();
         });
@@ -28,7 +28,7 @@ app.service('loginService', function($rootScope, $http, $localStorage, $log, jwt
         }).success(function() {
             // $localStorage.$reset();
             delete $localStorage.authenticationToken;
-            delete $localStorage.credentials;
+            delete $localStorage.user;
             $log.debug("log out successful");
             $rootScope.$broadcast('logout');
         }).error(function() {

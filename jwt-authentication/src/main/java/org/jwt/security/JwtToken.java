@@ -9,7 +9,7 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import org.jwt.service.Credentials;
+import org.jwt.service.User;
 
 import com.auth0.jwt.Algorithm;
 import com.auth0.jwt.JWTSigner;
@@ -23,14 +23,14 @@ import com.auth0.jwt.JWTVerifyException;
 @Slf4j
 public class JwtToken {
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    protected static int expirySeconds = 60;
+    protected static int expirySeconds = 600;
     protected String secret = "secret";
     protected static final String HEADER_PREFIX = "Bearer ";
     @Getter
     private String token;
 
-    public JwtToken(Credentials credentials) {
-        this(credentials.asHashMap(), expirySeconds);
+    public JwtToken(User user) {
+        this(user.asHashMap(), expirySeconds);
     }
 
     public JwtToken(Map<String, Object> payload) {

@@ -28,14 +28,14 @@ public class LoginService {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/login")
-    public String login(Credentials credentials) throws AuthenticationException {
-        Credentials user = userService.findUser(credentials.getUsername());
+    public String login(User userToLogin) throws AuthenticationException {
+        User user = userService.findUser(userToLogin.getUsername());
         if (user == null) {
             throw new AuthenticationException("Login error");
         }
-        if (user.getPassword().equals(credentials.getPassword())) {
-            log.debug("Username: {} logged in.", credentials.getUsername());
-            return new JwtToken(credentials).getToken();
+        if (user.getPassword().equals(userToLogin.getPassword())) {
+            log.debug("Username: {} logged in.", user.getUsername());
+            return new JwtToken(user).getToken();
         } else {
             throw new AuthenticationException("Login error");
         }

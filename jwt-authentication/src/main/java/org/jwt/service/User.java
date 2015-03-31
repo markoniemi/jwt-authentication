@@ -3,6 +3,10 @@ package org.jwt.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -13,7 +17,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @ToString
-public class Credentials {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class User {
     @NonNull
     private String username;
     @NonNull

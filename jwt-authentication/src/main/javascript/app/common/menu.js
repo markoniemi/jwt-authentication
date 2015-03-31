@@ -1,9 +1,9 @@
 function menuCtrl($scope, $localStorage) {
-    $scope.credentials = $localStorage.credentials;
-    $scope.$on('login', function(event, credentials) {
-        $scope.credentials = credentials;
+    $scope.user = $localStorage.user;
+    $scope.$on('login', function(event, user) {
+        $scope.user = user;
     });
     $scope.$on('logout', function() {
-        $scope.credentials = null;
+        $scope.user = null;
     });
 }
