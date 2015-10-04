@@ -1,10 +1,8 @@
 package org.jwt;
 
-import org.glassfish.jersey.server.ResourceConfig;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 
-public class JwtAuthenticationApplication extends ResourceConfig {
-    public JwtAuthenticationApplication() {
-        register(new DependencyBinder());
-        packages(true, "org.jwt.service");
-    }
+@ApplicationPath("")
+public class JwtAuthenticationApplication extends Application {
 }

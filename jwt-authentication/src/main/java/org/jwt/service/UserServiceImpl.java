@@ -3,9 +3,6 @@ package org.jwt.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jvnet.hk2.annotations.Service;
-
-@Service
 public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {

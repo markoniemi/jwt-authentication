@@ -6,9 +6,8 @@ import javax.naming.AuthenticationException;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.jvnet.hk2.testing.junit.HK2Runner;
 
-public class LoginServiceTest extends HK2Runner {
+public class LoginServiceTest  {
     @Inject 
     LoginService loginService;
     @Inject @Named("UserServiceMock")

@@ -5,9 +5,6 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import org.jvnet.hk2.annotations.Service;
-
-@Service
 @Named
 public class UserServiceMock implements UserService {
     @Override

@@ -13,17 +13,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import org.jvnet.hk2.annotations.Service;
 import org.jwt.security.JwtToken;
 
 @Slf4j
 @Path("/")
-@Service
 public class LoginService {
-    @Inject
+//    @Inject
     @Getter
     @Setter
-    private UserService userService;
+    private UserService userService = new UserServiceImpl();
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)

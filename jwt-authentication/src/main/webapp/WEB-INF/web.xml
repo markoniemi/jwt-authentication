@@ -3,37 +3,75 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
-	<filter>
-		<filter-name>jwtAuthenticationFilter</filter-name>
-		<filter-class>org.jwt.security.JwtAuthenticationFilter</filter-class>
-		<init-param>
-			<param-name>secret</param-name>
-			<param-value>secret</param-value>
-		</init-param>
-		<init-param>
-			<param-name>loginUrl</param-name>
-			<param-value>/api/rest/login</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>jwtAuthenticationFilter</filter-name>
-		<url-pattern>/api/rest/*</url-pattern>
-	</filter-mapping>
+<!-- 	<filter> -->
+<!-- 		<filter-name>jwtAuthenticationFilter</filter-name> -->
+<!-- 		<filter-class>org.jwt.security.JwtAuthenticationFilter</filter-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>secret</param-name> -->
+<!-- 			<param-value>secret</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>loginUrl</param-name> -->
+<!-- 			<param-value>/api/rest/login</param-value> -->
+<!-- 		</init-param> -->
+<!-- 	</filter> -->
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>jwtAuthenticationFilter</filter-name> -->
+<!-- 		<url-pattern>/api/rest/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>jersey-servlet</servlet-name> -->
+<!-- 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>javax.ws.rs.Application</param-name> -->
+<!-- 			<param-value>org.jwt.JwtAuthenticationApplication</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>jersey.config.server.provider.packages</param-name> -->
+<!-- 			<param-value>org.jwt.service</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<load-on-startup>1</load-on-startup> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>jersey-servlet</servlet-name> -->
+<!-- 		<url-pattern>/api/rest/*</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+
+	<!-- RestEasy -->	
+	<!-- Auto scan REST service -->
+	<context-param>
+		<param-name>resteasy.scan</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<!-- this should be the same URL pattern as the servlet-mapping property -->
+	<context-param>
+		<param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>api/rest</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+	</listener>
+	<!-- resteasy guice listener -->
+<!--     <listener> -->
+<!--         <listener-class>org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener</listener-class> -->
+<!--     </listener>	 -->
 	<servlet>
-		<servlet-name>jersey-servlet</servlet-name>
-		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-		<init-param>
-			<param-name>javax.ws.rs.Application</param-name>
-			<param-value>org.jwt.JwtAuthenticationApplication</param-value>
-		</init-param>
-		<init-param>
-			<param-name>jersey.config.server.provider.packages</param-name>
-			<param-value>org.jwt.service</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+<!-- 		<init-param> -->
+<!--             <param-name>javax.ws.rs.Application</param-name> -->
+<!--             <param-value>org.jwt.JwtAuthenticationApplication</param-value> -->
+<!--    		</init-param> -->
+	</servlet>	
 	<servlet-mapping>
-		<servlet-name>jersey-servlet</servlet-name>
+		<servlet-name>resteasy-servlet</servlet-name>
 		<url-pattern>/api/rest/*</url-pattern>
+<!-- 		<url-pattern>/*</url-pattern> -->
 	</servlet-mapping>
+	<!-- guice -->
+    <context-param>
+        <param-name>resteasy.guice.modules</param-name>
+        <param-value>org.jwt.JwtAuthenticationModule</param-value>
+    </context-param>
 </web-app>
