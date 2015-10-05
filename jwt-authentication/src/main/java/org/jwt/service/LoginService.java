@@ -18,10 +18,11 @@ import org.jwt.security.JwtToken;
 @Slf4j
 @Path("/")
 public class LoginService {
-//    @Inject
+    @Inject
     @Getter
     @Setter
-    private UserService userService = new UserServiceImpl();
+//    private UserService userService = new UserServiceImpl();
+    private UserService userService;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
