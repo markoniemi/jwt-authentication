@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.inject.Named;
 
-@Named
+@Named("UserServiceMock")
 public class UserServiceMock implements UserService {
     @Override
     public List<User> findAll() {
