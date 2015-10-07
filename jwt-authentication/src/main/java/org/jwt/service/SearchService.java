@@ -9,9 +9,7 @@ import javax.ws.rs.PathParam;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Path("/search")
 public class SearchService {
     @Inject
