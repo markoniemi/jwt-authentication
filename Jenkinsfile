@@ -12,7 +12,7 @@ stage 'Test'
    sh "${mvnHome}/bin/mvn -Dmaven.test.failure.ignore package -DskipITs=true"
    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
 stage 'Integration test'
-   sh "${mvnHome}/bin/mvn -Dmaven.test.failure.ignore install"
+   sh "${mvnHome}/bin/mvn -Dmaven.test.failure.ignore install -P tomcat"
    step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
 stage 'Sonar'
    sh "${mvnHome}/bin/mvn -Dmaven.test.failure.ignore sonar:sonar -DskipTests=true -Dsonar.host.url=${env.SONAR_URL}"

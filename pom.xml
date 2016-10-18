@@ -18,7 +18,7 @@
 		<angular-translate.version>2.4.2</angular-translate.version>
 		<jersey.version>2.16</jersey.version>
 		<resteasy-version>3.0.4.Final</resteasy-version>
-		<tomcat.version>7.0.70</tomcat.version>
+		<tomcat.version>7.0.72</tomcat.version>
 	</properties>
 	<dependencies>
 		<!-- UI -->
@@ -169,65 +169,35 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>agent-for-ut</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>agent-for-it</id>
-						<goals>
-							<goal>prepare-agent-integration</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>jacoco-site</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.4.0.M1</version>
-				<configuration>
-					<httpConnector>
-						<port>${http.port}</port>
-					</httpConnector>
-   					<webApp>
-						<contextPath>/jwt-authentication</contextPath>
-					    <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-					      <resourcesAsCSV>src/main/webapp,src/main/javascript</resourcesAsCSV>
-					    </baseResource>						
-					</webApp>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<stopPort>8005</stopPort>
-					<stopKey>STOP</stopKey>
-				</configuration>
-				<executions>
-					<execution>
-						<id>start-jetty</id>
+						<id>prepare-agent</id>
 						<phase>pre-integration-test</phase>
 						<goals>
-							<goal>start</goal>
+							<goal>prepare-agent</goal>
+<!-- 							<goal>prepare-agent-integration</goal> -->
 						</goals>
 						<configuration>
-							<scanIntervalSeconds>0</scanIntervalSeconds>
-							<daemon>true</daemon>
+<!-- 							<destFile>${project.build.directory}/jacoco.exec</destFile> -->
+							<propertyName>argLine</propertyName>
 						</configuration>
 					</execution>
 					<execution>
-						<id>stop-jetty</id>
+						<id>dump</id>
 						<phase>post-integration-test</phase>
 						<goals>
-							<goal>stop</goal>
+							<goal>dump</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>report</goal>
+<!-- 							<goal>report-integration</goal> -->
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
@@ -251,6 +221,120 @@
 		</plugins>
 	</build>
 	<profiles>
+		<profile>
+			<id>tomcat</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<version>1.4.16</version>
+						<configuration>
+							<wait>false</wait>
+							<warName>${finalName}.war</warName>
+							<container>
+								<containerId>tomcat7x</containerId>
+								<zipUrlInstaller>
+									<url>http://mirror.netinch.com/pub/apache/tomcat/tomcat-7/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</url>
+									<downloadDir>${appsDir}</downloadDir>
+									<extractDir>${appsDir}</extractDir>
+								</zipUrlInstaller>
+								<timeout>120000</timeout>
+							</container>
+							<configuration>
+								<files>
+									<!-- <file> -->
+									<!-- <file>${project.basedir}/src/test/resources/survey.jks</file> -->
+									<!-- <todir>conf</todir> -->
+									<!-- <overwrite>true</overwrite> -->
+									<!-- </file> -->
+								</files>
+								<properties>
+									<cargo.jvmargs>${argLine},output=tcpserver,port=6300</cargo.jvmargs>
+									<cargo.servlet.users>admin:admin:User</cargo.servlet.users>
+									<cargo.servlet.port>${http.port}</cargo.servlet.port>
+									<cargo.protocol>${http.protocol}</cargo.protocol>
+									<cargo.tomcat.ajp.port>${ajp.port}</cargo.tomcat.ajp.port>
+									<cargo.container.rmi.port>${rmi.port}</cargo.container.rmi.port>
+									<!-- testing properties for ssl -->
+									<!-- <cargo.tomcat.connector.clientAuth>false</cargo.tomcat.connector.clientAuth> -->
+									<!-- <cargo.tomcat.connector.keyAlias>survey</cargo.tomcat.connector.keyAlias> -->
+									<!-- <cargo.tomcat.connector.keystoreFile>conf/survey.jks</cargo.tomcat.connector.keystoreFile> -->
+									<!-- <cargo.tomcat.connector.keystorePass>changeit</cargo.tomcat.connector.keystorePass> -->
+									<!-- <cargo.tomcat.connector.sslProtocol>TLS</cargo.tomcat.connector.sslProtocol> -->
+									<!-- <cargo.tomcat.httpSecure>true</cargo.tomcat.httpSecure> -->
+								</properties>
+							</configuration>
+						</configuration>
+						<executions>
+							<execution>
+								<id>start-container</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>stop-container</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>jetty</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<version>9.4.0.M1</version>
+						<configuration>
+							<jvmArgs>${argLine},output=tcpserver,port=6300 -Drunmode=TEST</jvmArgs>
+							<httpConnector>
+								<port>${http.port}</port>
+							</httpConnector>
+							<webApp>
+								<contextPath>/jwt-authentication</contextPath>
+								<baseResource
+									implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+									<resourcesAsCSV>src/main/webapp,src/main/javascript</resourcesAsCSV>
+								</baseResource>
+							</webApp>
+							<scanIntervalSeconds>10</scanIntervalSeconds>
+							<stopPort>8005</stopPort>
+							<stopKey>STOP</stopKey>
+						</configuration>
+						<executions>
+							<execution>
+								<id>start-jetty</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+<!-- 									<goal>run-forked</goal> -->
+								</goals>
+								<configuration>
+									<scanIntervalSeconds>0</scanIntervalSeconds>
+									<daemon>true</daemon>
+								</configuration>
+							</execution>
+							<execution>
+								<id>stop-jetty</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<profile>
 			<id>unix</id>
 			<activation>
