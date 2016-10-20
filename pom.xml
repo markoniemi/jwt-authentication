@@ -169,30 +169,27 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>prepare-agent</id>
-						<phase>pre-integration-test</phase>
+						<id>coverage</id>
 						<goals>
 							<goal>prepare-agent</goal>
-<!-- 							<goal>prepare-agent-integration</goal> -->
+							<goal>report</goal>
 						</goals>
-						<configuration>
-<!-- 							<destFile>${project.build.directory}/jacoco.exec</destFile> -->
-							<propertyName>argLine</propertyName>
-						</configuration>
 					</execution>
 					<execution>
-						<id>dump</id>
-						<phase>post-integration-test</phase>
+						<id>prepare-integration-agent</id>
+						<phase>pre-integration-test</phase>
 						<goals>
-							<goal>dump</goal>
+							<goal>prepare-agent-integration</goal>
 						</goals>
+						<configuration>
+							<propertyName>itArgLine</propertyName>
+						</configuration>
 					</execution>
 					<execution>
 						<id>report</id>
 						<phase>verify</phase>
 						<goals>
-							<goal>report</goal>
-<!-- 							<goal>report-integration</goal> -->
+							<goal>report-integration</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -250,7 +247,7 @@
 									<!-- </file> -->
 								</files>
 								<properties>
-									<cargo.jvmargs>${argLine},output=tcpserver,port=6300</cargo.jvmargs>
+									<cargo.jvmargs>${itArgLine}</cargo.jvmargs>
 									<cargo.servlet.users>admin:admin:User</cargo.servlet.users>
 									<cargo.servlet.port>${http.port}</cargo.servlet.port>
 									<cargo.protocol>${http.protocol}</cargo.protocol>
