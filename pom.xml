@@ -163,9 +163,6 @@
 				<version>0.7.7.201606060606</version>
 				<configuration>
 					<append>true</append>
-					<excludes>
-						<exclude>**com.steadystate*</exclude>
-					</excludes>
 				</configuration>
 				<executions>
 					<execution>
@@ -173,22 +170,7 @@
 						<goals>
 							<goal>prepare-agent</goal>
 							<goal>report</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>prepare-integration-agent</id>
-						<phase>pre-integration-test</phase>
-						<goals>
 							<goal>prepare-agent-integration</goal>
-						</goals>
-						<configuration>
-							<propertyName>itArgLine</propertyName>
-						</configuration>
-					</execution>
-					<execution>
-						<id>report</id>
-						<phase>verify</phase>
-						<goals>
 							<goal>report-integration</goal>
 						</goals>
 					</execution>
@@ -247,7 +229,8 @@
 									<!-- </file> -->
 								</files>
 								<properties>
-									<cargo.jvmargs>${itArgLine}</cargo.jvmargs>
+									<!-- jacoco-maven-plugin sets argLine by default -->
+									<cargo.jvmargs>${argLine}</cargo.jvmargs>
 									<cargo.servlet.users>admin:admin:User</cargo.servlet.users>
 									<cargo.servlet.port>${http.port}</cargo.servlet.port>
 									<cargo.protocol>${http.protocol}</cargo.protocol>
