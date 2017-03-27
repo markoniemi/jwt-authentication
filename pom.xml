@@ -18,7 +18,7 @@
 		<angular-translate.version>2.4.2</angular-translate.version>
 		<jersey.version>2.16</jersey.version>
 		<resteasy-version>3.0.4.Final</resteasy-version>
-		<tomcat.version>7.0.72</tomcat.version>
+		<tomcat.version>7.0.76</tomcat.version>
 	</properties>
 	<dependencies>
 		<!-- UI -->
@@ -214,7 +214,7 @@
 							<container>
 								<containerId>tomcat7x</containerId>
 								<zipUrlInstaller>
-									<url>http://mirror.netinch.com/pub/apache/tomcat/tomcat-7/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</url>
+									<url>https://archive.apache.org/dist/tomcat/tomcat-7/${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</url>
 									<downloadDir>${appsDir}</downloadDir>
 									<extractDir>${appsDir}</extractDir>
 								</zipUrlInstaller>
