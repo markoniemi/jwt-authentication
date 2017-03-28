@@ -15,5 +15,5 @@ stage 'Integration test'
    sh "${mvnHome}/bin/mvn -Dmaven.test.failure.ignore install -P tomcat"
    step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
 stage 'Sonar'
-   sh "${mvnHome}/bin/mvn -Dmaven.test.failure.ignore sonar:sonar -DskipTests=true -Dsonar.host.url=${env.SONAR_URL}"
+   sh "${mvnHome}/bin/mvn -Dmaven.test.failure.ignore org.sonarsource.scanner.maven:sonar-maven-plugin:3.0.2:sonar -DskipTests=true -Dsonar.host.url=${env.SONAR_URL}"
 }
