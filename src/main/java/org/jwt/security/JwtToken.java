@@ -44,14 +44,18 @@ public class JwtToken {
         options.setAlgorithm(Algorithm.HS512);
         token = jwtSigner.sign(payload, options);
     }
-    
+
     public JwtToken(String token) {
         this.token = token;
     }
 
-    public void verifyToken() throws NoSuchAlgorithmException, InvalidKeyException,
-            IOException, SignatureException, JWTVerifyException {
-        new JWTVerifier(secret).verify(token);
+    public void verifyToken() throws JWTVerifyException  {
+        try {
+            new JWTVerifier(secret).verify(token);
+        } catch (InvalidKeyException | NoSuchAlgorithmException | IllegalStateException | SignatureException
+                | IOException | JWTVerifyException e) {
+            throw new JWTVerifyException();
+        }
     }
 
     /**

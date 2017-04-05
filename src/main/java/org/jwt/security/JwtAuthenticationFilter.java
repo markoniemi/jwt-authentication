@@ -1,9 +1,6 @@
 package org.jwt.security;
 
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,9 +11,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lombok.extern.log4j.Log4j2;
-
 import com.auth0.jwt.JWTVerifyException;
+
+import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class JwtAuthenticationFilter implements Filter {
@@ -44,8 +41,7 @@ public class JwtAuthenticationFilter implements Filter {
                     log.debug("URL {} is authenticated", request.getRequestURI());
                     filterChain.doFilter(request, response);
                     // TODO show different message for different errors
-                } catch (InvalidKeyException | NoSuchAlgorithmException | IllegalStateException | SignatureException
-                        | JWTVerifyException e) {
+                } catch (JWTVerifyException e) {
                     log.trace(String.format("URL %s is not authenticated", request.getRequestURI()), e);
                     sendError(response);
                 }
