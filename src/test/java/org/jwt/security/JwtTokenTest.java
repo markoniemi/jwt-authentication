@@ -1,13 +1,11 @@
 package org.jwt.security;
 
-import java.security.SignatureException;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.jwt.service.User;
 
-import com.auth0.jwt.JWTExpiredException;
 import com.auth0.jwt.JWTSigner;
+import com.auth0.jwt.JWTVerifyException;
 
 public class JwtTokenTest {
     @Test
@@ -42,7 +40,7 @@ public class JwtTokenTest {
             token.verifyToken();
             Assert.fail();
         } catch (Exception e) {
-            Assert.assertTrue(e instanceof JWTExpiredException);
+            Assert.assertTrue(e instanceof JWTVerifyException);
         }
     }
 
@@ -56,7 +54,7 @@ public class JwtTokenTest {
             token.verifyToken();
             Assert.fail();
         } catch (Exception e) {
-            Assert.assertTrue(e instanceof SignatureException);
+            Assert.assertTrue(e instanceof JWTVerifyException);
         }
     }
 }
