@@ -10,6 +10,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+@SuppressWarnings("squid:S2925")
 public class JwtAuthenticationIT {
     private String httpPort;
     private String httpProtocol;

@@ -7,6 +7,7 @@ import org.jwt.service.User;
 import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifyException;
 
+@SuppressWarnings("squid:S2925")
 public class JwtTokenTest {
     @Test
     public void parseToken() {

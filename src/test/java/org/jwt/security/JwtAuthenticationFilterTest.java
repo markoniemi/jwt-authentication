@@ -18,6 +18,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("squid:S2925")
 public class JwtAuthenticationFilterTest {
     @Mock
     HttpServletRequest request;

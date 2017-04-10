@@ -54,6 +54,7 @@ public class JwtToken {
             new JWTVerifier(secret).verify(token);
         } catch (InvalidKeyException | NoSuchAlgorithmException | IllegalStateException | SignatureException
                 | IOException | JWTVerifyException e) {
+            log.error(e.getMessage(), e);
             throw new JWTVerifyException(e.getMessage());
         }
     }
