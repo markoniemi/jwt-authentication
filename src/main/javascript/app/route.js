@@ -1,5 +1,5 @@
-app.config([ '$routeProvider', function($routeProvider) {
-	console.log("route");
+app.config([ '$routeProvider', function($routeProvider, $log) {
+  $log.debug("route");
 	$routeProvider.when('/:group/:page/:id', {
 		templateUrl: function(routeParams) {
 			return createTemplateUrl(routeParams.group, routeParams.page);
@@ -22,6 +22,6 @@ app.config([ '$routeProvider', function($routeProvider) {
 
 function createTemplateUrl(group, page){
 	templateUrl = 'app/' + group + '/' + page + '.xhtml';
-	console.log(templateUrl);
+  $log.debug("route url template: " + templateUrl);
 	return templateUrl;
 }
