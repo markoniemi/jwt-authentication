@@ -1,9 +1,6 @@
 package org.jwt;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
@@ -36,6 +33,7 @@ public class JwtAuthenticationIT {
         browser.quit();
     }
 
+    @Ignore
     @Test
     public void test() throws InterruptedException {
         openBrowser();
@@ -59,7 +57,7 @@ public class JwtAuthenticationIT {
         browser.findElement(By.id("loginButton")).click();
         Thread.sleep(500);
         Assert.assertEquals(browser.getPageSource(), "Login",
-        browser.getTitle());
+                browser.getTitle());
     }
 
     private void login() throws InterruptedException {
@@ -70,13 +68,13 @@ public class JwtAuthenticationIT {
         browser.findElement(By.id("loginButton")).click();
         Thread.sleep(500);
         Assert.assertEquals(browser.getPageSource(), "Echo",
-        browser.getTitle());
+                browser.getTitle());
     }
 
     protected void openBrowser() throws InterruptedException {
         browser.get(serverURL + "/" + appName + "/");
         Thread.sleep(500);
-         Assert.assertEquals(browser.getPageSource(), "Login",
-         browser.getTitle());
+        Assert.assertEquals(browser.getPageSource(), "Login",
+                browser.getTitle());
     }
 }
